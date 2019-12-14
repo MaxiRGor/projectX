@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.kkaminets.myapplication4">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/kisspng"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Second"
+            android:label="Second">
+        </activity>
+        <activity
+            android:name=".listOne.Spisok1"
+            android:label="Spisok1">
+        </activity>
+        <activity
+            android:name=".listTwo.Spisok2"
+            android:label="Spisok2">
+        </activity>
+    </application>
+
+</manifest>

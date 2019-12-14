@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Assassistant</string>
+    <string name="full_name">Ф.И.О:</string>
+    <string name="add_button">Добавить</string>
+    <string name="work_category">Специальность</string>
+    <string name="сategory">Категория или разряд</string>
+    <string name="name_services">Наименование услуги</string>
+    <string name="cost_work">Цена</string>
+</resources>
