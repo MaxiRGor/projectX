@@ -23,7 +23,11 @@
         <activity
             android:name=".listOne.Spisok1"
             android:label="Spisok1">
+
         </activity>
+        <activity
+            android:name=".Fire.Fire"
+            android:label="Fire"></activity>
         <activity
             android:name=".listTwo.Spisok2"
             android:label="Spisok2">
