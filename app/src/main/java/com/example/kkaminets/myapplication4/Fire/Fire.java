@@ -3,32 +3,23 @@ package com.example.kkaminets.myapplication4.Fire;
 
 import android.app.Activity;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.MenuItem;
 
 import com.example.kkaminets.myapplication4.R;
-
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Fire extends Activity {
 
     private RecyclerView recyclerView;
-    private List<UserModel> result;
-    private UserAdapter adapter;
 
-    private FirebaseDatabase database;
-    private DatabaseReference reference;
+    private UserAdapter adapter;
 
 
     @Override
@@ -36,10 +27,6 @@ public class Fire extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.firelist);
 
-        database = FirebaseDatabase.getInstance();
-        reference = database.getReference("uslugi");
-
-        result = new ArrayList<>();
 
         recyclerView = (RecyclerView) findViewById(R.id.uslugi_list);
         recyclerView.setHasFixedSize(true);
@@ -48,90 +35,28 @@ public class Fire extends Activity {
 
         recyclerView.setLayoutManager(lin);
 
-
-        adapter= new UserAdapter(result);
+        adapter = new UserAdapter(new ArrayList<UserModel>());
         recyclerView.setAdapter(adapter);
 
         updateList();
-
-
-    }
-
-    @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId()){
-            case 0:
-                removeUser(item.getGroupId());
-                break;
-            case 1:
-                break;
-        }
-        return super.onContextItemSelected(item);
     }
 
 
-    private void updateList(){
-
-        reference.addChildEventListener(new ChildEventListener() {
+    private void updateList() {
+        FirebaseFirestore.getInstance()
+                .collection("uslugi")
+                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                result.add(dataSnapshot.getValue(UserModel.class));
-                adapter.notifyDataSetChanged();
-            }
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
+                    UserModel model = snapshot.toObject(UserModel.class);
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                UserModel model = dataSnapshot.getValue(UserModel.class);
-                int index = getitemIndex(model);
-
-                result.set(index,model);
-                adapter.notifyItemChanged(index);
-
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                UserModel model = dataSnapshot.getValue(UserModel.class);
-                int index = getitemIndex(model);
-
-                result.remove(index);
-                adapter.notifyItemRemoved(index);
-
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                    //for easy access from adapter
+                    model.setDocumentID(snapshot.getId());
+                    adapter.addResult(model);
+                }
             }
         });
 
-    }
-    private int getitemIndex(UserModel user){
-
-        int index = -1;
-
-        for (int i=0; i<result.size(); i++){
-
-            if (result.get(1).key.equals(user.key)){
-                index=1;
-                break;
-            }
-        }
-        return index;
-
-    }
-
-    private void  removeUser(int position){
-        reference.child(result.get(position).key).removeValue();
     }
 }

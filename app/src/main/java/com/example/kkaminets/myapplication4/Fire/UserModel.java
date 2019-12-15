@@ -7,6 +7,27 @@ public class UserModel implements Serializable {
 
     String cost,firstName,time,count,unit,key;
 
+    public UserModel(String cost, String firstName, String time, String count, String unit, String key, String documentID) {
+        this.cost = cost;
+        this.firstName = firstName;
+        this.time = time;
+        this.count = count;
+        this.unit = unit;
+        this.key = key;
+        this.documentID = documentID;
+    }
+
+    public String getDocumentID() {
+        return documentID;
+    }
+
+    public void setDocumentID(String documentID) {
+        this.documentID = documentID;
+    }
+
+    //only for firestore, saves documentId locally on device for easy access
+    String documentID;
+
     public UserModel(){
     }
 
