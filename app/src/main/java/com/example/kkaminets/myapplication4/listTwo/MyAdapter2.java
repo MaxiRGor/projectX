@@ -13,11 +13,14 @@ import com.example.kkaminets.myapplication4.R;
 public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.EmployeeViewHolder> {
     private Context mContext;
     private Cursor mCursor;
+    private OnItemTappedListener onItemTappedListener;
 
     public MyAdapter2(Context context, Cursor cursor) {
         mContext = context;
         mCursor = cursor;
+        this.onItemTappedListener = (Spisok2) context;
     }
+
     // класс ViewHolder описывает представление элемента и метаданные о его месте в RecyclerView.
     public class EmployeeViewHolder extends RecyclerView.ViewHolder {
         //Создаем переменные TextView
@@ -49,10 +52,10 @@ public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.EmployeeViewHold
             return;
         }
         //Присваиваем переменным значения
-        String name = mCursor.getString(mCursor.getColumnIndex(EmployeeBase.EmployeeEntry.COLUMN_NAME));
-        String worker = mCursor.getString(mCursor.getColumnIndex(EmployeeBase.EmployeeEntry.COLUMN_WORKER));
-        String category = mCursor.getString(mCursor.getColumnIndex(EmployeeBase.EmployeeEntry.COLUMN_CATEGORY));
-        String field = mCursor.getString(mCursor.getColumnIndex(EmployeeBase.EmployeeEntry.COLUMN_FILED));
+        final String name = mCursor.getString(mCursor.getColumnIndex(EmployeeBase.EmployeeEntry.COLUMN_NAME));
+        final String worker = mCursor.getString(mCursor.getColumnIndex(EmployeeBase.EmployeeEntry.COLUMN_WORKER));
+        final String category = mCursor.getString(mCursor.getColumnIndex(EmployeeBase.EmployeeEntry.COLUMN_CATEGORY));
+        final String field = mCursor.getString(mCursor.getColumnIndex(EmployeeBase.EmployeeEntry.COLUMN_FILED));
 
         long id = mCursor.getLong(mCursor.getColumnIndex(EmployeeBase.EmployeeEntry._ID));
 
@@ -61,6 +64,13 @@ public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.EmployeeViewHold
         holder.categoryText.setText(category);
         holder.fieldText.setText(field);
         holder.itemView.setTag(id);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemTappedListener.itemTapped(name, worker, category, field);
+            }
+        });
     }
 
     @Override
@@ -79,4 +89,6 @@ public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.EmployeeViewHold
             notifyDataSetChanged();
         }
     }
+
+
 }

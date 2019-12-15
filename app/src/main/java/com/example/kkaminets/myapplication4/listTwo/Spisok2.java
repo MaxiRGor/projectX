@@ -1,4 +1,5 @@
 package com.example.kkaminets.myapplication4.listTwo;
+
 import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -14,7 +15,7 @@ import android.widget.EditText;
 import com.example.kkaminets.myapplication4.R;
 
 //Активити списка сотрудников
-public class Spisok2 extends Activity{
+public class Spisok2 extends Activity implements OnItemTappedListener {
 
     private SQLiteDatabase mDatabase;
     private MyAdapter2 mAdapter;
@@ -69,7 +70,7 @@ public class Spisok2 extends Activity{
     private void addItem() {
 
         if (mEditTextName.getText().toString().trim().length() == 0 || mEditTextWorker.getText().toString().trim().length() == 0
-                || mEditTextCategory.getText().toString().trim().length() ==0) {
+                || mEditTextCategory.getText().toString().trim().length() == 0) {
             return;
         }// проверка на пустые поля  и возврат при их наличии
 
@@ -95,13 +96,15 @@ public class Spisok2 extends Activity{
         mEditTextFildt.getText().clear();
 
     }
+
     //метод удаления item  по id
     private void removeItem(long id) {
         mDatabase.delete(EmployeeBase.EmployeeEntry.TABLE_NAME,
                 EmployeeBase.EmployeeEntry._ID + "=" + id, null);
         mAdapter.swapCursor(getAllItems());
     }
-        //класс Cursor - это набор строк в табличном виде
+
+    //класс Cursor - это набор строк в табличном виде
     private Cursor getAllItems() {
         return mDatabase.query(     //возвращает запрос к бд
                 EmployeeBase.EmployeeEntry.TABLE_NAME,
@@ -112,5 +115,14 @@ public class Spisok2 extends Activity{
                 null,
                 EmployeeBase.EmployeeEntry.COLUMN_TIMESTAMP + " DESC"
         );
+    }
+
+
+    @Override
+    public void itemTapped(String name, String worker, String category, String text) {
+        mEditTextName.setText(name);
+        mEditTextWorker.setText(worker);
+        mEditTextCategory.setText(category);
+        mEditTextFildt.setText(text);
     }
 }
