@@ -32,6 +32,7 @@
         android:layout_below="@+id/edit_password"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="52dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/back"
         android:onClick="Spisok1"
         android:text="Заказы"
@@ -48,15 +49,34 @@
         android:layout_height="59dp"
         android:layout_below="@+id/edit_password"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="192dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/back"
         android:onClick="Spisok2"
         android:text="Сотрудники"
         android:textColor="#fff"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button_spisok3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_spisok1"
         tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/button_spisok3"
+        android:layout_width="214dp"
+        android:layout_height="59dp"
+        android:layout_below="@+id/edit_password"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="96dp"
+        android:background="@drawable/back"
+        android:onClick="Fire"
+        android:text="Услуги"
+        android:textColor="#fff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_spisok2"
+        tools:ignore="MissingConstraints,OnClick" />
 
 
 </android.support.constraint.ConstraintLayout>
