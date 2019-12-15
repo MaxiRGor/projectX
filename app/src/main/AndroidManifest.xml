@@ -11,15 +11,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+
+        </activity>
+        <activity
+
+            android:name=".Second"
+            android:label="Second">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".Second"
-            android:label="Second">
         </activity>
         <activity
             android:name=".listOne.Spisok1"
@@ -28,7 +30,9 @@
         </activity>
         <activity
             android:name=".Fire.Fire"
-            android:label="Fire"></activity>
+            android:label="Fire">
+
+        </activity>
         <activity
             android:name=".listTwo.Spisok2"
             android:label="Spisok2">
